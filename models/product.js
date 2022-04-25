@@ -8,6 +8,7 @@ const p = path.join(
 	"products.json"
 );
 
+//helper function          cb= callback function
 const getProductsFromFile = (cb) => {
 	fs.readFile(p, (err, fileContent) => {
 		if (err) {

@@ -2,7 +2,7 @@ const Product = require("../models/product");
 
 exports.getAddProduct = (req, res, next) => {
 	// console.log("In another middleware!");
-	res.render("add-product", {
+	res.render("admin/add-product", {
 		pageTitle: "Add Product",
 		path: "admin/add-product",
 		formsCSS: true,
@@ -21,7 +21,7 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
 	const products = Product.fetchAll((products) => {
-		res.render("shop", {
+		res.render("shop/product-list", {
 			prods: products,
 			pageTitle: "Shop",
 			path: "/",
