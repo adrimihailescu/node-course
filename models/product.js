@@ -35,6 +35,10 @@ module.exports = class Product {
 	// method available in this class
 	//function for adding new products or editing existing products
 	save() {
+		return db.execute(
+			"INSERT INTO products (title, price, imageUrl, description)  VALUE (?, ?, ?, ?)",
+			[this.title, this.price, this.imageUrl, this.description]
+		);
 		// getProductsFromFile((products) => {
 		// 	if (this.id) {
 		// 		const existingProductIndex = products.findIndex(
