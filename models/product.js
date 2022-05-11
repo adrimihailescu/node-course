@@ -77,6 +77,7 @@ module.exports = class Product {
 	}
 
 	static findById(id, cb) {
+		return db.execute("SELECT * FROM products WHERE products.id = ?", [id]);
 		// getProductsFromFile((products) => {
 		// 	const product = products.find((p) => p.id === id);
 		// 	cb(product);
