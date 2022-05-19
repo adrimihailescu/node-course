@@ -120,11 +120,12 @@ exports.getProducts = (req, res, next) => {
 // destroy() method will delete the entry from the database
 exports.postDeleteProduct = (req, res, next) => {
 	const prodId = req.body.productId;
-	Product.findByPk(prodId)
-		.then((product) => {
-			return product.destroy();
-		})
-		.then((result) => {
+	Product.deleteById(prodId)
+		// Product.findByPk(prodId)
+		// 	.then((product) => {
+		// 		return product.destroy();
+		// 	})
+		.then(() => {
 			console.log("DESTROYED PRODUCT");
 			res.redirect("/admin/products");
 		})
