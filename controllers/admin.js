@@ -16,14 +16,17 @@ exports.postAddProduct = (req, res, next) => {
 	const imageUrl = req.body.imageUrl;
 	const price = req.body.price;
 	const description = req.body.description;
-	req.user
-		.createProduct({
-			title: title,
-			price: price,
-			imageUrl: imageUrl,
-			description: description,
-			// userId: req.user.id, //manually setting the user id
-		})
+	const product = new Product(title, price, description, imageUrl);
+	product
+		.save()
+		// req.user
+		// 	.createProduct({
+		// 		title: title,
+		// 		price: price,
+		// 		imageUrl: imageUrl,
+		// 		description: description,
+		// 		// userId: req.user.id, //manually setting the user id
+		// 	})
 		// Product.create()
 		.then((result) => {
 			// console.log(result);
