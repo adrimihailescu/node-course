@@ -19,7 +19,8 @@ exports.getProducts = (req, res, next) => {
 exports.getProduct = (req, res, next) => {
 	const prodId = req.params.productId;
 	//sequelize has the findById method as well but has been replaced by findByPk() in sequelize5
-	Product.findByPk(prodId)
+	//use findById for MongoDb
+	Product.findById(prodId)
 		.then((product) => {
 			res.render("shop/product-detail", {
 				product: product,
