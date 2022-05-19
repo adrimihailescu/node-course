@@ -38,17 +38,20 @@ exports.postAddProduct = (req, res, next) => {
 		});
 };
 
+//responsible for fetching the product that should be edited and rendered
 exports.getEditProduct = (req, res, next) => {
 	const editMode = req.query.edit;
 	if (!editMode) {
 		return res.redirect("/");
 	}
 	const prodId = req.params.productId;
-	req.user
-		.getProducts({ where: { id: prodId } })
-		// Product.findByPk(prodId)
-		.then((products) => {
-			const product = products[0];
+	//sql
+	// req.user
+	// 	.getProducts({ where: { id: prodId } })
+	//Product.findByPk(prodId)
+	Product.findById(prodId)
+		.then((product) => {
+			// const product = products[0];   sql
 			if (!product) {
 				return res.redirect("/");
 			}
@@ -64,7 +67,7 @@ exports.getEditProduct = (req, res, next) => {
 		});
 };
 
-//construct new product and replace
+//construct new product and replace / saving it to the databse
 exports.postEditProduct = (req, res, next) => {
 	const prodId = req.body.productId;
 	const updatedTitle = req.body.title;
@@ -87,9 +90,9 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-	// Product.findAll()
-	req.user
-		.getProducts()
+	Product.fetchAll()
+		// req.user
+		// 	.getProducts()
 		.then((products) => {
 			res.render("admin/products", {
 				prods: products,
