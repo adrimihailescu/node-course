@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 	//sequelize setup is with findByPk()
 	User.findById("628b9fd28ba35d9e1a140b69")
 		.then((user) => {
-			req.user = user;
+			req.user = new User(user.name, user.email, user.cart, user._id);
 			next();
 		})
 		.catch((err) => console.log(err));
