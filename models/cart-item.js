@@ -1,3 +1,4 @@
+//no use for it in mongodb
 const Sequelize = require("sequelize");
 
 const sequelize = require("../util/database");
