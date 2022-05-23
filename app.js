@@ -57,7 +57,6 @@ app.use((req, res, next) => {
 			next();
 		})
 		.catch((err) => console.log(err));
-	next();
 });
 
 //routes
