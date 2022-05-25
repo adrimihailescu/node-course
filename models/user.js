@@ -94,6 +94,16 @@ class User {
 			);
 	}
 
+	addOrder() {
+		const db = getDb();
+		return db
+			.collection("orders")
+			.insertOne(this.cart)
+			.then((result) => {
+				this.cart = { items: [] };
+			});
+	}
+
 	static findById(userId) {
 		const db = getDb();
 		return db
