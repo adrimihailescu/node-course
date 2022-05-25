@@ -6,10 +6,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 // const expressHbs = require("express-handlebars");
 
+const mongoose = require("mongoose");
+
 const errorController = require("./controllers/error");
 
 //mongoDb
-const mongoConnect = require("./util/database").mongoConnect;
+// const mongoConnect = require("./util/database").mongoConnect;
 const User = require("./models/user");
 
 //sequelize
@@ -101,6 +103,19 @@ app.use(errorController.get404);
 // 		console.log(err);
 // 	});
 
-mongoConnect(() => {
-	app.listen(3000);
-});
+//MongoDb
+// mongoConnect(() => {
+// 	app.listen(3000);
+// });
+
+//connecting to mongoose
+mongoose
+	.connect(
+		"mongodb+srv://adriana:18032022@cluster0.s3blo.mongodb.net/shop?retryWrites=true&w=majority"
+	)
+	.then((result) => {
+		app.listen(3000);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
