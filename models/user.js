@@ -56,6 +56,11 @@ userSchema.methods.removeFromCart = function (productId) {
 	return this.save();
 };
 
+userSchema.methods.clearCart = function () {
+	this.cart = { items: [] }; // this updated the cart to have no items in it anymore
+	return this.save(); //then save to update
+};
+
 module.exports = mongoose.model("User", userSchema);
 
 // //sequelize
