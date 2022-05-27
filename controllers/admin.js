@@ -136,7 +136,9 @@ exports.getProducts = (req, res, next) => {
 // destroy() method will delete the entry from the database
 exports.postDeleteProduct = (req, res, next) => {
 	const prodId = req.body.productId;
-	Product.deleteById(prodId)
+	// Product.deleteById(prodId) //mongodb method
+	Product.findByIdAndRemove(prodId) //mongoose method
+
 		// Product.findByPk(prodId)
 		// 	.then((product) => {
 		// 		return product.destroy();
