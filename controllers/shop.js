@@ -5,8 +5,10 @@ const Product = require("../models/product");
 exports.getProducts = (req, res, next) => {
 	//replaced fetchAll with findAll sequelize method
 	//changed back to fetchAll for MongoDb
-	Product.fetchAll()
+	// Product.fetchAll()
+	Product.find()
 		.then((products) => {
+			console.log(products);
 			res.render("shop/product-list", {
 				prods: products,
 				pageTitle: "All Products",
@@ -34,7 +36,8 @@ exports.getProduct = (req, res, next) => {
 exports.getIndex = (req, res, next) => {
 	//replacing fetchAll with findAll sequelize method
 	//switch back to fetchAll for MOngoDb
-	Product.fetchAll()
+	// Product.fetchAll()
+	Product.find()
 		.then((products) => {
 			res.render("shop/index", {
 				prods: products,
