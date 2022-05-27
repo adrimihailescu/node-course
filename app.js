@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const errorController = require("./controllers/error");
-
+const User = require("./models/user");
 //mongoDb
 // const mongoConnect = require("./util/database").mongoConnect;
 // const User = require("./models/user");
@@ -52,15 +52,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 //mongoDb
-// app.use((req, res, next) => {
-// 	//sequelize setup is with findByPk()
-// 	User.findById("628b9fd28ba35d9e1a140b69")
-// 		.then((user) => {
-// 			req.user = new User(user.name, user.email, user.cart, user._id);
-// 			next();
-// 		})
-// 		.catch((err) => console.log(err));
-// });
+app.use((req, res, next) => {
+	//sequelize setup is with findByPk()
+	User.findById("6290ce5b5172d69a5fe24990")
+		.then((user) => {
+			req.user = user;
+			next();
+		})
+		.catch((err) => console.log(err));
+});
 
 //routes
 app.use("/admin", adminRoutes);
@@ -115,6 +115,18 @@ mongoose
 		"mongodb+srv://adriana:18032022@cluster0.s3blo.mongodb.net/shop?retryWrites=true&w=majority"
 	)
 	.then((result) => {
+		User.findOne().then((user) => {
+			if (!user) {
+				const user = new User({
+					name: "Adriana",
+					email: "test@test.com",
+					cart: {
+						items: [],
+					},
+				});
+				user.save();
+			}
+		});
 		app.listen(3000);
 	})
 	.catch((err) => {
