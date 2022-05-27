@@ -25,6 +25,7 @@ exports.postAddProduct = (req, res, next) => {
 			price: price,
 			description: description,
 			imageUrl: imageUrl,
+			userId: req.user,
 		}
 		//mongoDb
 		// title,
@@ -121,7 +122,10 @@ exports.getProducts = (req, res, next) => {
 	Product.find() //method for mongoose
 		// req.user
 		// 	.getProducts()
+		// .select("title price -_id") //you can control which fields to be populated
+		// .populate("userId", "name") //all the data in one step
 		.then((products) => {
+			console.log(products);
 			res.render("admin/products", {
 				prods: products,
 				pageTitle: "Admin Products",
