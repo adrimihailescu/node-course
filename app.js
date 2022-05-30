@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 const errorController = require("./controllers/error");
 const User = require("./models/user");
@@ -23,8 +24,15 @@ const User = require("./models/user");
 // const CartItem = require("./models/cart-item");
 // const Order = require("./models/order");
 // const OrderItem = require("./models/order-item");
+const MONGODB_URI =
+	"mongodb+srv://adriana:18032022@cluster0.s3blo.mongodb.net/shop";
 
 const app = express();
+
+const store = new MongoDBStore({
+	uri: MONGODB_URI,
+	collection: "sessions",
+});
 
 // app.engine(
 // 	"hbs",
@@ -53,7 +61,12 @@ const authRoutes = require("./routes/auth");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
-	session({ secret: "my secret", resave: false, saveUninitialised: false })
+	session({
+		secret: "my secret",
+		resave: false,
+		saveUninitialised: false,
+		store: store,
+	})
 );
 
 //mongoDb
@@ -117,9 +130,7 @@ app.use(errorController.get404);
 
 //connecting to mongoose
 mongoose
-	.connect(
-		"mongodb+srv://adriana:18032022@cluster0.s3blo.mongodb.net/shop?retryWrites=true&w=majority"
-	)
+	.connect(MONGODB_URI)
 	.then((result) => {
 		User.findOne().then((user) => {
 			if (!user) {
