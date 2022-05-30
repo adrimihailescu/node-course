@@ -39,6 +39,7 @@ app.set("views", "views");
 //routes
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
+const authRoutes = require("./routes/auth");
 
 // db.execute("SELECT * FROM products")
 // 	.then((result) => {
@@ -65,6 +66,7 @@ app.use((req, res, next) => {
 //routes
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
 
 app.use(errorController.get404);
 
