@@ -72,7 +72,12 @@ app.use(
 //mongoDb
 app.use((req, res, next) => {
 	//sequelize setup is with findByPk()
-	User.findById("6290ce5b5172d69a5fe24990")
+	// User.findById("6290ce5b5172d69a5fe24990")
+	if (!req.session.user) {
+		return next();
+	}
+	User.findById(req.session.user._id)
+
 		.then((user) => {
 			req.user = user;
 			next();
