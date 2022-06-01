@@ -4,7 +4,9 @@ const Product = require("../models/product");
 const ObjectId = mongodb.ObjectId;
 
 exports.getAddProduct = (req, res, next) => {
-	// console.log("In another middleware!");
+	// if (!req.session.isLoggedIn) {
+	// 	return res.redirect("/login");
+	// }
 	res.render("admin/edit-product", {
 		pageTitle: "Add Product",
 		path: "/admin/add-product",
