@@ -160,10 +160,11 @@ exports.postSignup = (req, res, next) => {
 			// 	html: "<h1>You succesfully signed up!</h1>",
 			// });
 		})
-		.catch((err) => {});
-	const error = new Error(err);
-	error.httpStatusCode = 500;
-	return next(error);
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
 };
 
 exports.postLogout = (req, res, next) => {
