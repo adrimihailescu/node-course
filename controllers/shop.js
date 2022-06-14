@@ -6,6 +6,7 @@ const PDFDocument = require("pdfkit");
 const Product = require("../models/product");
 // const Cart = require("../models/cart");
 const Order = require("../models/order");
+const ITEMS_PER_PAGE = 2;
 
 exports.getProducts = (req, res, next) => {
 	//replaced fetchAll with findAll sequelize method
@@ -49,10 +50,13 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
+	const page = req.query.page;
 	//replacing fetchAll with findAll sequelize method
 	//switch back to fetchAll for MOngoDb
 	// Product.fetchAll()
 	Product.find()
+		.skip((page - 1) * ITEMS_PER_PAGE)
+		.limit(ITEMS_PER_PAGE)
 		.then((products) => {
 			res.render("shop/index", {
 				prods: products,
