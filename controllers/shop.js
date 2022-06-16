@@ -198,6 +198,28 @@ exports.postCartDeleteProduct = (req, res, next) => {
 		.catch((err) => console.log(err));
 };
 
+exports.getCheckout = (req, res, next) => {
+	req.user
+		.populate("cart.items.productId")
+		.then((user) => {
+			const products = user.cart.items;
+			let total = 0;
+			products.forEach((p) => {
+				total += p.quantity * p.productId.price;
+			});
+			res.render("shop/checkout", {
+				path: "/checkout",
+				pageTitle: "Checkout",
+				products: products,
+				totalSum: total,
+			});
+		})
+		.catch((err) => {
+			const error = new Error(err);
+			error.httpStatusCode = 500;
+			return next(error);
+		});
+};
 exports.postOrder = (req, res, next) => {
 	req.user
 		.populate("cart.items.productId")
@@ -269,13 +291,6 @@ exports.getOrders = (req, res, next) => {
 			error.httpStatusCode = 500;
 			return next(error);
 		});
-};
-
-exports.getCheckout = (req, res, next) => {
-	res.render("shop/checkout", {
-		path: "/checkout",
-		pageTitle: "Checkout",
-	});
 };
 
 exports.getInvoice = (req, res, next) => {
